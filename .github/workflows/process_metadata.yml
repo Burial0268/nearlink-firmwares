@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  # 允许手动触发
+  workflow_dispatch:
 
 permissions:
-  contents: write    # 明确声明需要的权限
+  contents: write
 
 jobs:
   extract_metadata:
@@ -15,19 +15,18 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4  # 更新到最新版本
+      uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # 确保能获取完整的 git 历史
+        fetch-depth: 0
 
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'  # 启用依赖缓存
 
     - name: Extract and Transform Metadata
       run: node .github/workflows/extract-metadata.js
-      continue-on-error: false  # 确保出错时工作流会失败
+      continue-on-error: false
 
     - name: Check for changes
       id: check_changes

@@ -46,7 +46,7 @@ async function main() {
             if (metadata.files && Array.isArray(metadata.files)) {
               metadata.files = metadata.files.map(file => ({
                 ...file,
-                rawLink: `https://raw.githubusercontent.com/${repoUser}/${repoName}/${currentBranch}/${folder}/${file.filename}`
+                rawLink: `https://raw.githubusercontent.com/${repoUser}/${repoName}/${currentBranch}/firmwares/${folder}/${file.filename}`
               }));
               delete metadata.files.filename;
               result[folder] = metadata;
@@ -68,6 +68,11 @@ async function main() {
     // 写入 JSON 文件
     await fs.writeFile(mainFile, JSON.stringify(result, null, 2));
     await fs.writeFile(backupFile, JSON.stringify(result, null, 2));
+
+    // 在控制台输出处理好的元数据
+    console.log('\n=== Processed Metadata Collection ===\n');
+    console.log(JSON.stringify(result, null, 2));
+    console.log('\n=== End of Metadata Collection ===\n');
 
     console.log('Metadata processing completed successfully');
   } catch (error) {

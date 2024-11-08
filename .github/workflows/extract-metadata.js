@@ -4,15 +4,10 @@ const path = require('path');
 // 使用相对于工作目录的路径
 const rootDir = process.cwd();
 const firmwareDir = path.join(rootDir, 'firmwares');
-const outputDir = path.join(rootDir, 'datas');
-const backupDir = path.join(outputDir, 'backups');
+const outputFile = path.join(rootDir, 'metadata-collections.json');
 
 async function main() {
   try {
-    // 创建输出目录
-    await fs.mkdir(outputDir, { recursive: true });
-    await fs.mkdir(backupDir, { recursive: true });
-
     // 获取仓库信息，使用环境变量
     const repoUser = process.env.GITHUB_REPOSITORY_OWNER;
     const repoName = process.env.GITHUB_REPOSITORY.split('/')[1];
@@ -67,14 +62,8 @@ async function main() {
       }
     }
 
-    // 生成时间戳
-    const timestamp = new Date().toISOString().replace(/[-T:\.Z]/g, '');
-    const mainFile = path.join(outputDir, 'metadata-collection-latest.json');
-    const backupFile = path.join(backupDir, `${timestamp}.json`);
-
-    // 写入 JSON 文件
-    await fs.writeFile(mainFile, JSON.stringify(result, null, 2));
-    await fs.writeFile(backupFile, JSON.stringify(result, null, 2));
+    // 写入 JSON 文件到根目录
+    await fs.writeFile(outputFile, JSON.stringify(result, null, 2));
 
     // 在控制台输出处理好的元数据
     console.log('\n=== Processed Metadata Collection ===\n');

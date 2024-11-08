@@ -28,12 +28,29 @@ jobs:
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
+        # 获取当前时间戳
+        TIMESTAMP=$(date +'%Y%m%d%H%M%S')
+        BRANCH_NAME="metadata-${TIMESTAMP}"
+
         # 检查是否有变更
-        if [[ -n "$(git status --porcelain datas/)" ]]; then
-          echo "Changes detected in datas directory"
-          git add datas/
+        if [[ -n "$(git status --porcelain)" ]]; then
+          echo "Changes detected in metadata"
+
+          # 创建新的分支
+          git checkout -b $BRANCH_NAME
+
+          # 添加并提交更改
+          git add metadata-collections.json
           git commit -m "Update metadata collection: $(date +'%Y-%m-%d %H:%M:%S')"
-          git push
+
+          # 推送新分支
+          git push origin $BRANCH_NAME
+
+          # 切回主分支并更新
+          git checkout main
+          git add metadata-collections.json
+          git commit -m "Update metadata collection: $(date +'%Y-%m-%d %H:%M:%S')"
+          git push origin main
         else
           echo "No changes to commit"
         fi

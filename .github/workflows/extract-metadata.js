@@ -1,6 +1,5 @@
 const fs = require('fs').promises;
 const path = require('path');
-const { execSync } = require('child_process');
 
 // 使用相对于工作目录的路径
 const rootDir = process.cwd();

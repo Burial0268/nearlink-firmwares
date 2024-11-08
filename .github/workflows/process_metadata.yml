@@ -36,18 +36,19 @@ jobs:
         if [[ -n "$(git status --porcelain)" ]]; then
           echo "Changes detected in metadata"
 
-          # 创建新的分支
-          git checkout -b $BRANCH_NAME
+          # 保存生成的文件内容
+          cp metadata-collections.json /tmp/metadata-collections.json
 
-          # 添加并提交更改
+          # 创建并推送新分支
+          git checkout -b $BRANCH_NAME
+          cp /tmp/metadata-collections.json metadata-collections.json
           git add metadata-collections.json
           git commit -m "Update metadata collection: $(date +'%Y-%m-%d %H:%M:%S')"
-
-          # 推送新分支
           git push origin $BRANCH_NAME
 
-          # 切回主分支并更新
+          # 更新主分支
           git checkout main
+          cp /tmp/metadata-collections.json metadata-collections.json
           git add metadata-collections.json
           git commit -m "Update metadata collection: $(date +'%Y-%m-%d %H:%M:%S')"
           git push origin main

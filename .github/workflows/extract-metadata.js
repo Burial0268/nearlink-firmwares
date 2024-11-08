@@ -43,6 +43,13 @@ async function main() {
           const metadataContent = await fs.readFile(metadataPath, 'utf-8');
           try {
             const metadata = JSON.parse(metadataContent);
+
+            // 检查 online 状态，如果明确设置为 false 则跳过
+            if (metadata.online === false) {
+              console.log(`Skipping ${folder}: firmware is offline`);
+              continue;
+            }
+
             if (metadata.files && Array.isArray(metadata.files)) {
               metadata.files = metadata.files.map(file => ({
                 ...file,

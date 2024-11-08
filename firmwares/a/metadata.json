@@ -1,4 +1,5 @@
 {
+  "online": true,
   "imageUrl": "https://picsum.photos/seed/1/600/400",
   "packageName": "移动固件",
   "description": "提供移动数据获取功能",

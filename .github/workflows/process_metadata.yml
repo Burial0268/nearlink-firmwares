@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:  # 允许手动触发
+
+permissions:
+  contents: write    # 明确声明需要的权限
 
 jobs:
   extract_metadata:
@@ -11,20 +15,32 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4  # 更新到最新版本
+      with:
+        fetch-depth: 0  # 确保能获取完整的 git 历史
 
     - name: Set up Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
-        node-version: '16'
+        node-version: '18'
+        cache: 'npm'  # 启用依赖缓存
 
     - name: Extract and Transform Metadata
-      run: node extract-metadata.js
+      run: node .github/workflows/extract-metadata.js
+      continue-on-error: false  # 确保出错时工作流会失败
+
+    - name: Check for changes
+      id: check_changes
+      run: |
+        git diff --exit-code || echo "changes=true" >> $GITHUB_OUTPUT
 
     - name: Commit changes
+      if: steps.check_changes.outputs.changes == 'true'
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add .
+        git add datas/
         git commit -m "Update metadata collection: $(date +'%Y-%m-%d %H:%M:%S')"
         git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

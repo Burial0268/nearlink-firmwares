@@ -1,0 +1,33 @@
+{
+  "online": true,
+  "imageUrl": "https://picsum.photos/seed/1/600/400",
+  "packageName": "移动固件111",
+  "description": "提供移动111数据获取功能",
+  "author": "张三111",
+  "authorAvatar": "https://api.dicebear.com/7.x/avatars/svg?seed=1",
+  "needCode": true,
+  "categories": [
+    "移动通信"
+  ],
+  "chips": [
+    "Hi2222"
+  ],
+  "files": [
+    {
+      "name": "一号固件",
+      "filename": "1.txt"
+    },
+    {
+      "name": "二号固件",
+      "filename": "2.fkpg"
+    },
+    {
+      "name": "三号固件",
+      "filename": "3.fkpg"
+    },
+    {
+      "name": "四号固件",
+      "filename": "4.fkpg"
+    }
+  ]
+}

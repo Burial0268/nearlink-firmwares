@@ -28,9 +28,9 @@ jobs:
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-        # 获取当前时间戳
-        TIMESTAMP=$(date +'%Y%m%d%H%M%S')
-        BRANCH_NAME="metadata-${TIMESTAMP}"
+        # 获取当前时间戳（包含毫秒）
+        TIMESTAMP=$(date +'%Y-%m-%d-%H-%M-%S')-$(date +%N | cut -b1-3)
+        BRANCH_NAME="${TIMESTAMP}"
 
         # 检查是否有变更
         if [[ -n "$(git status --porcelain)" ]]; then

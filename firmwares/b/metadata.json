@@ -1,5 +1,5 @@
 {
-  "online": false,
+  "online": true,
   "imageUrl": "https://picsum.photos/seed/1/600/400",
   "packageName": "移动固件22",
   "description": "提供移动数据222获取功能",
@@ -7,10 +7,10 @@
   "authorAvatar": "https://api.dicebear.com/7.x/avatars/svg?seed=1",
   "needCode": true,
   "categories": [
-    "移动通信"
+    "移动通22信"
   ],
   "chips": [
-    "Hi2222"
+    "Hi222222222"
   ],
   "files": [
     {

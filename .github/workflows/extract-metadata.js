@@ -29,6 +29,7 @@ async function main() {
     for (const folder of folders) {
       const folderPath = path.join(firmwareDir, folder);
       const metadataPath = path.join(folderPath, 'metadata.json');
+      const readmePath = path.join(folderPath, 'readme.md');
 
       try {
         const stats = await fs.stat(folderPath);
@@ -51,6 +52,12 @@ async function main() {
                 rawLink: `https://raw.githubusercontent.com/${repoUser}/${repoName}/${currentBranch}/firmwares/${folder}/${file.filename}`
               }));
               delete metadata.files.filename;
+
+              // 检查是否存在 readme.md
+              if (await fs.access(readmePath).then(() => true).catch(() => false)) {
+                metadata.readmeFile = `https://raw.githubusercontent.com/${repoUser}/${repoName}/${currentBranch}/firmwares/${folder}/readme.md`;
+              }
+
               result[folder] = metadata;
             }
           } catch (error) {

@@ -19,11 +19,6 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-
     - name: Extract and Transform Metadata
       run: node .github/workflows/extract-metadata.js
       continue-on-error: false
